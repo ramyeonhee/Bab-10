@@ -1,0 +1,34 @@
+package TulisFile;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class UkuranFile {
+    public static void main(String[] args) {
+        var file = new File("test.txt");
+
+        // Tuliskan beberapa data ke dalam file agar tidak kosong
+        try (var writer = new FileWriter(file)) {
+            writer.write("Ini adalah contoh isi file agar ukuran file tidak 0 KB.\n");
+            writer.write("Menambahkan lebih banyak baris untuk memastikan ukuran bertambah.\n");
+        } catch (IOException e) {
+            System.err.println("Gagal menulis ke file.");
+            return;
+        }
+
+        // Mengecek apakah file ada dan dapat dibaca
+        if (file.exists() && file.canRead()) {
+            long ukuranBytes = file.length();
+
+            if (ukuranBytes < 1024 * 1024) {
+                double ukuranKB = ukuranBytes / 1024.0;
+                System.out.printf("Ukuran file: %.2f KB\n", ukuranKB);
+            } else {
+                double ukuranMB = ukuranBytes / (1024.0 * 1024.0);
+                System.out.printf("Ukuran file: %.2f MB\n", ukuranMB);
+            }
+        } else {
+            System.out.println("File tidak ada atau tidak dapat dibaca.");
+        }
+    }
+}
